@@ -1,0 +1,21 @@
+{
+  "name": "task-manager-api",
+  "version": "1.0.0",
+  "description": "tasks apis node.js express mongoose jwt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "apis",
+    "node.js",
+    "express",
+    "mongoose",
+    "jwt"
+  ],
+  "author": "Alleydev",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
