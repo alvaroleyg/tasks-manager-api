@@ -8,7 +8,7 @@ let tasks = [
     { id: 1, title: 'Empezar API en NodeJS', completed: true },
 ]
 
-// Rutas para tareas
+// PETICIONES CRUD
 // GET: Obtener todas las tareas
 app.get('/api/tasks', (req, res) => {
     res.json(tasks);
