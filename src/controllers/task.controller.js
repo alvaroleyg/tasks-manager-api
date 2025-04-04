@@ -3,6 +3,7 @@ let tasks = [
 ]
 
 // PETICIONES CRUD
+
 // GET: Obtener todas las tareas
 exports.getAllTasks = (req, res) => {
     res.json(tasks);
