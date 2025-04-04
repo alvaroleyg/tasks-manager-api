@@ -41,7 +41,7 @@ exports.createTask = (req, res) => {
     });
 }
 
-app.updateTask = (req, res) => {
+exports.updateTask = (req, res) => {
     const taskId = parseInt(req.params.id);
     const { title, completed } = req.body;
     const taskIndex = tasks.findIndex(t => t.id === taskId);
@@ -63,7 +63,7 @@ app.updateTask = (req, res) => {
 }
 
 // DELETE: Eliminar una tarea
-app.delete = (req, res) => {
+exports.deleteTask = (req, res) => {
     const taskId = parseInt(req.params.id);
     const taskIndex = tasks.findIndex(t => t.id === taskId);
 
