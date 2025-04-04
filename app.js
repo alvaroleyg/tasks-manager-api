@@ -46,6 +46,40 @@ app.post('/api/tasks', (req, res) => {
     });
 });
 
+app.put('/api/tasks/:id', (req, res) => {
+    const taskId = parseInt(req.params.id);
+    const { title, completed } = req.body;
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
+
+    if (taskIndex === -1) {
+        return res.status(404).json({ message: 'Tarea no encontrada' });
+    }
+
+    tasks[taskIndex] = {
+        ...tasks[taskIndex],
+        title: title !== undefined ? title : tasks[taskIndex].title,
+        completed: completed !== undefined ? completed : tasks[taskIndex].completed
+    }
+
+    res.json({
+        message: 'Tarea actualizada con éxito',
+        task: tasks[taskIndex]
+    });
+});
+
+// DELETE: Eliminar una tarea
+app.delete('/api/tasks/:id', (req, res) => {
+    const taskId = parseInt(req.params.id);
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
+
+    if (taskIndex === -1) {
+        return res.status(404).json({ message: 'Tarea no encontrada' });
+    }
+
+    tasks.splice(taskIndex, 1);
+    res.json({ message: 'Tarea eliminada con éxito' });
+});
+
 app.get('/', (req, res) => {
     res.send('¡Bienvenido a la API de tareas en NodeJS! Desarrollado por AlleyDev');
 });
