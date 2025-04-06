@@ -1,6 +1,11 @@
+require('dotenv').config(); // Cargar variables de entorno desde el archivo .env
 const express = require('express');
+const connectDB = require('./config/db/db');
 const taskRoutes = require('./routes/task.routes');
 const { errorHandler, notFoundHandler } = require('./middlewares/error');
+
+// Conexión a la base de datos MongoDB
+connectDB();
 
 const app = express();
 const PORT = 3000;
