@@ -5,7 +5,14 @@ const Task = require('../models/task.model');
 // GET: Obtener todas las tareas
 exports.getAllTasks = async (req, res, next) => {
     try {
-        const tasks = await Task.find({ user : req.user._id })
+        const { completed } = req.query;
+        const query = { user: req.user._id };
+
+        if (completed !== undefined) {
+            query.completed = completed === 'true';
+        }
+
+        const tasks = await Task.find(query).sort({ createdAt: -1 });
         res.status(200).json({
             message: 'Tareas obtenidas con éxito',
             tasks
