@@ -2,6 +2,7 @@ require('dotenv').config(); // Cargar variables de entorno desde el archivo .env
 const express = require('express');
 const connectDB = require('./config/db/db');
 const taskRoutes = require('./routes/task.routes');
+const authRoutes = require('./routes/auth.routes');
 const { errorHandler, notFoundHandler } = require('./middlewares/error');
 
 // Conexión a la base de datos MongoDB
@@ -14,6 +15,7 @@ const PORT = 3000;
 app.use(express.json());
 
 // Rutas de la API
+app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 
 // Ruta principal

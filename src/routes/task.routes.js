@@ -3,6 +3,10 @@ const router = express.Router();
 const { body } = require('express-validator');
 const taskController = require('../controllers/task.controller');
 const { validate } = require('../middlewares/validator');
+const authMiddleware = require('../middlewares/auth');
+
+// Middleware de autenticación para proteger las rutas
+router.use(authMiddleware);
 
 // VALIDACION PARA CREAR Y ACTUALIZAR TAREAS
 const taskValidation = [
