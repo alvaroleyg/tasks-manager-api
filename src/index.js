@@ -1,5 +1,7 @@
 require('dotenv').config(); // Cargar variables de entorno desde el archivo .env
 const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
 const connectDB = require('./config/db/db');
 const taskRoutes = require('./routes/task.routes');
 const authRoutes = require('./routes/auth.routes');
@@ -10,6 +12,10 @@ connectDB();
 
 const app = express();
 const PORT = 3000;
+
+// Middleware de seguridad
+app.use(helmet());
+app.use(cors());
 
 // Middleware para parsear el cuerpo de las peticiones JSON
 app.use(express.json());
