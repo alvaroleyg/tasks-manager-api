@@ -14,6 +14,14 @@ exports.getAllTasks = async (req, res, next) => {
             query.completed = completed === 'true';
         }
 
+        // Búsqueda por título si se proporciona
+        if (search) {
+            query.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } }
+            ];
+        }
+
         // Convertir a números
         const pageNumber = parseInt(page);
         const limitNumber = parseInt(limit);
