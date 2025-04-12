@@ -5,17 +5,41 @@ const Task = require('../models/task.model');
 // GET: Obtener todas las tareas
 exports.getAllTasks = async (req, res, next) => {
     try {
-        const { completed } = req.query;
+        // Opciones de filtrado
+        const { completed, page = 1, limit = 10 } = req.query;
         const query = { user: req.user._id };
 
+        // Filtrar por estado si se proporciona
         if (completed !== undefined) {
             query.completed = completed === 'true';
         }
 
-        const tasks = await Task.find(query).sort({ createdAt: -1 });
+        // Convertir a números
+        const pageNumber = parseInt(page);
+        const limitNumber = parseInt(limit);
+
+        // Calcular salto para paginación
+        const skip = (pageNumber - 1) * limitNumber;
+
+        // Ejecutar consulta con paginación
+        const totalTasks = await Task.find(query)
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limitNumber);
+
+        // Contar total de documentos para metadatos de paginación
+        const totalCount = await Task.countDocuments(query);
+
         res.status(200).json({
             message: 'Tareas obtenidas con éxito',
-            tasks
+            tasks,
+            pagination: {
+                total: totalCount,
+                currentPage: pageNumber,
+                itemsPerPage: limitNumber,
+                totalPages: Math.ceil(totalCount / limitNumber),
+            }
+
         });
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener las tareas', error });
